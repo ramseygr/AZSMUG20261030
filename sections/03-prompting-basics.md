@@ -60,3 +60,14 @@ Create a read-only Azure PowerShell script that lists all virtual machines in a 
 ## Timing
 
 Target: 8-10 minutes.
+
+## Closing Follow-Up: Spec-Driven Development
+
+Use the comparison slide after the guardrails section, not during the initial
+prompting introduction. Keep it to about one minute; no tooling walkthrough.
+
+- Today's vibe coding workflow is exploratory: use conversation to shape an idea, inspect drafts, test, and refine.
+- Spec-driven development adds formality: record agreed requirements, constraints, and acceptance criteria in a shared specification, then use it to guide implementation and tests.
+- These are not mutually exclusive. Exploration can help discover requirements; a spec can make those decisions explicit as scope, risk, or team coordination needs grow.
+- Both approaches still require human judgment, review, testing, and iteration. A spec is not a guarantee of correct code.
+- Spec-driven development is outside today's scope. Offer [GitHub Spec Kit](https://github.com/github/spec-kit) as an optional starting point for further exploration.

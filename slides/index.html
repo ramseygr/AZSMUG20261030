@@ -193,6 +193,10 @@
       margin-top: 42px;
     }
 
+    .grid-operations {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .tile {
       min-height: 190px;
       border: 2px solid var(--ink);
@@ -377,7 +381,7 @@
 </head>
 <body>
   <div class="slide-status" aria-hidden="true">
-    <span id="counter">1 / 16</span>
+    <span id="counter">1 / 17</span>
     <div class="bar"><span id="progress"></span></div>
     <span class="navigation-hint">Use left and right arrow keys</span>
   </div>
@@ -446,10 +450,11 @@
       <div class="content">
         <div class="eyebrow">Why It Matters</div>
         <h2>Cloud work is full of repeatable patterns.</h2>
-        <div class="grid">
+        <div class="grid grid-operations">
           <div class="tile"><strong>Scripts</strong><span>Generate, explain, and refine automation without starting from a blank file.</span></div>
           <div class="tile"><strong>Config</strong><span>Reason through YAML, JSON, Bicep, CLI commands, and docs from inside the editor.</span></div>
           <div class="tile"><strong>Troubleshooting</strong><span>Use errors and terminal output as context for the next useful step.</span></div>
+          <div class="tile"><strong>Simplify</strong><span>Build operator-friendly interfaces that turn routine tasks into clear, guided steps.</span></div>
         </div>
       </div>
     </section>
@@ -532,6 +537,25 @@ Output: The format I want back.</div>
           <li>Prefer read-only demos and least privilege</li>
           <li>Validate in a safe environment before production</li>
         </ul>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <div class="eyebrow">Looking Ahead</div>
+        <h2>Vibe coding vs. spec-driven development</h2>
+        <div class="grid grid-operations">
+          <div class="tile">
+            <strong>Vibe coding</strong>
+            <span>Explore through conversation: prompt, review, test, and refine as the idea takes shape.</span>
+          </div>
+          <div class="tile">
+            <strong>Spec-driven development</strong>
+            <span>Make intent explicit first: agree on requirements and acceptance criteria, then guide implementation and tests with a shared spec.</span>
+          </div>
+        </div>
+        <p>More structure as scope and team needs grow. Both still need iteration and review.</p>
+        <p>Beyond today's scope: explore <a href="https://github.com/github/spec-kit" target="_blank" rel="noopener noreferrer">GitHub Spec Kit</a> next.</p>
       </div>
     </section>
 
