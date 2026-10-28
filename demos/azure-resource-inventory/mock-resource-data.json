@@ -1,0 +1,20 @@
+[
+  {
+    "Name": "demo-vm-01",
+    "ResourceGroupName": "rg-copilot-demo",
+    "ResourceType": "Microsoft.Compute/virtualMachines",
+    "Location": "eastus"
+  },
+  {
+    "Name": "demostorage001",
+    "ResourceGroupName": "rg-copilot-demo",
+    "ResourceType": "Microsoft.Storage/storageAccounts",
+    "Location": "eastus"
+  },
+  {
+    "Name": "demo-loganalytics",
+    "ResourceGroupName": "rg-monitoring-demo",
+    "ResourceType": "Microsoft.OperationalInsights/workspaces",
+    "Location": "centralus"
+  }
+]

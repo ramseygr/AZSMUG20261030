@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GitHub Copilot 101 with Cloud Automation</title>
+  <style>
+    :root {
+      --bg: #f6f0e6;
+      --ink: #182024;
+      --muted: #5d676c;
+      --panel: #fffaf0;
+      --line: #d8cdbc;
+      --cyan: #0078d4;
+      --green: #16835a;
+      --amber: #c77700;
+      --brick: #a13d2d;
+      --shadow: 0 18px 55px rgba(24, 32, 36, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, rgba(0, 120, 212, 0.08) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(22, 131, 90, 0.07) 1px, transparent 1px),
+        var(--bg);
+      background-size: 44px 44px;
+      font-family: "Aptos Display", "Segoe UI Variable Display", Candara, Calibri, sans-serif;
+      overflow: hidden;
+    }
+
+    .deck {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: none;
+      padding: clamp(32px, 6vw, 84px);
+      align-items: center;
+    }
+
+    .slide.active {
+      display: flex;
+    }
+
+    .content {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 22px;
+      color: var(--brick);
+      font-size: clamp(14px, 1.3vw, 18px);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 40px;
+      height: 4px;
+      background: var(--brick);
+    }
+
+    h1, h2 {
+      margin: 0;
+      line-height: 0.96;
+      letter-spacing: 0;
+      max-width: 980px;
+    }
+
+    h1 {
+      font-size: clamp(54px, 8.2vw, 118px);
+    }
+
+    h2 {
+      font-size: clamp(46px, 6vw, 86px);
+    }
+
+    p {
+      max-width: 850px;
+      color: var(--muted);
+      font-size: clamp(22px, 2.4vw, 34px);
+      line-height: 1.22;
+    }
+
+    .lead {
+      margin-top: 28px;
+      color: var(--ink);
+      font-size: clamp(24px, 2.7vw, 38px);
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .pill {
+      border: 2px solid var(--ink);
+      background: var(--panel);
+      padding: 10px 16px;
+      font-size: clamp(16px, 1.5vw, 22px);
+      font-weight: 750;
+      box-shadow: 5px 5px 0 var(--ink);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 42px;
+    }
+
+    .tile {
+      min-height: 190px;
+      border: 2px solid var(--ink);
+      background: var(--panel);
+      padding: 24px;
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+
+    .tile strong {
+      display: block;
+      margin-bottom: 12px;
+      font-size: clamp(24px, 2.3vw, 34px);
+    }
+
+    .tile span {
+      color: var(--muted);
+      font-size: clamp(18px, 1.7vw, 24px);
+      line-height: 1.25;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+      margin-top: 52px;
+    }
+
+    .step {
+      min-height: 160px;
+      padding: 18px;
+      color: white;
+      background: var(--cyan);
+      border: 2px solid var(--ink);
+      box-shadow: 6px 6px 0 var(--ink);
+      font-size: clamp(18px, 1.7vw, 26px);
+      font-weight: 850;
+      display: flex;
+      align-items: end;
+    }
+
+    .step:nth-child(2) { background: var(--green); }
+    .step:nth-child(3) { background: var(--amber); }
+    .step:nth-child(4) { background: var(--brick); }
+    .step:nth-child(5) { background: #495057; }
+    .step:nth-child(6) { background: #314b7c; }
+
+    .prompt {
+      margin-top: 40px;
+      border: 2px solid var(--ink);
+      background: #11181d;
+      color: #f7f4eb;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      font-family: Consolas, "Cascadia Code", monospace;
+      font-size: clamp(20px, 2vw, 30px);
+      line-height: 1.35;
+      white-space: pre-wrap;
+    }
+
+    ul {
+      margin: 38px 0 0;
+      padding: 0;
+      display: grid;
+      gap: 16px;
+      list-style: none;
+      max-width: 920px;
+    }
+
+    li {
+      border-left: 8px solid var(--cyan);
+      background: rgba(255, 250, 240, 0.78);
+      padding: 16px 20px;
+      font-size: clamp(22px, 2.2vw, 32px);
+      line-height: 1.16;
+      box-shadow: 0 8px 24px rgba(24, 32, 36, 0.08);
+    }
+
+    li:nth-child(2) { border-color: var(--green); }
+    li:nth-child(3) { border-color: var(--amber); }
+    li:nth-child(4) { border-color: var(--brick); }
+
+    .demo {
+      width: min(920px, 100%);
+      border: 3px solid var(--ink);
+      background: var(--ink);
+      color: white;
+      box-shadow: 12px 12px 0 var(--amber);
+      padding: clamp(28px, 4vw, 52px);
+    }
+
+    .demo h2 {
+      color: white;
+    }
+
+    .demo p {
+      color: #dce7ea;
+    }
+
+    .footer {
+      position: fixed;
+      left: 28px;
+      right: 28px;
+      bottom: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 750;
+      pointer-events: none;
+    }
+
+    .bar {
+      width: min(340px, 40vw);
+      height: 8px;
+      border: 1px solid var(--ink);
+      background: rgba(255, 250, 240, 0.85);
+    }
+
+    .bar span {
+      display: block;
+      width: 0;
+      height: 100%;
+      background: var(--cyan);
+      transition: width 180ms ease;
+    }
+
+    @media (max-width: 860px) {
+      body {
+        overflow: auto;
+      }
+
+      .deck {
+        min-height: 100vh;
+        height: auto;
+      }
+
+      .slide {
+        min-height: 100vh;
+        padding: 28px 22px 76px;
+      }
+
+      .grid,
+      .flow {
+        grid-template-columns: 1fr;
+      }
+
+      .tile,
+      .step {
+        min-height: auto;
+      }
+    }
+
+    @media print {
+      body {
+        overflow: visible;
+        background: white;
+      }
+
+      .deck,
+      .slide {
+        position: static;
+        display: block;
+        width: auto;
+        height: auto;
+        page-break-after: always;
+      }
+
+      .footer {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck" aria-live="polite">
+    <section class="slide active">
+      <div class="content">
+        <div class="eyebrow">Azure Systems Management User Group</div>
+        <h1>GitHub Copilot 101 with Cloud Automation</h1>
+        <p class="lead">A practical introduction to using Copilot in Visual Studio Code for scripts, troubleshooting, documentation, and small operational tools.</p>
+        <div class="meta">
+          <span class="pill">October 30, 2026</span>
+          <span class="pill">VS Code</span>
+          <span class="pill">Cloud Automation</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <div class="eyebrow">Why It Matters</div>
+        <h2>Cloud work is full of repeatable patterns.</h2>
+        <div class="grid">
+          <div class="tile"><strong>Scripts</strong><span>Generate, explain, and refine automation without starting from a blank file.</span></div>
+          <div class="tile"><strong>Config</strong><span>Reason through YAML, JSON, Bicep, CLI commands, and docs from inside the editor.</span></div>
+          <div class="tile"><strong>Troubleshooting</strong><span>Use errors and terminal output as context for the next useful step.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <div class="eyebrow">Vibe Coding</div>
+        <h2>A fast loop with human judgment still in charge.</h2>
+        <div class="flow" aria-label="Vibe coding workflow">
+          <div class="step">Prompt</div>
+          <div class="step">Draft</div>
+          <div class="step">Review</div>
+          <div class="step">Test</div>
+          <div class="step">Refine</div>
+          <div class="step">Document</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <div class="eyebrow">Copilot In VS Code</div>
+        <h2>Copilot shows up where the work is happening.</h2>
+        <ul>
+          <li>Inline suggestions while you type</li>
+          <li>Chat for questions, generation, explanation, and debugging</li>
+          <li>Workspace context from files, selections, and terminal output</li>
+          <li>Help with tests, documentation, refactoring, and reviews</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <div class="eyebrow">Prompt Pattern</div>
+        <h2>Useful prompts have four parts.</h2>
+        <div class="prompt">Goal: What I want to accomplish.
+Context: The tool, language, file, or environment.
+Constraints: What must or must not happen.
+Output: The format I want back.</div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content demo">
+        <div class="eyebrow">Demo 1</div>
+        <h2>Explain and improve a script.</h2>
+        <p>Switch to VS Code. Select a small PowerShell or Azure CLI script, ask Copilot to explain it, identify risk, and improve readability without changing behavior.</p>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <div class="eyebrow">Cloud Automation Use Cases</div>
+        <h2>Good demos are useful, safe, and easy to inspect.</h2>
+        <ul>
+          <li>Azure resource inventory</li>
+          <li>Script explanation and risk review</li>
+          <li>Broken script troubleshooting</li>
+          <li>Operational documentation generation</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content demo">
+        <div class="eyebrow">Demo 2</div>
+        <h2>Build an Azure inventory helper.</h2>
+        <p>Start from plain language, generate a read-only script, add parameters, improve output, review the result, then ask Copilot to create usage documentation.</p>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <div class="eyebrow">Guardrails</div>
+        <h2>Generated code is a draft.</h2>
+        <ul>
+          <li>Review before running</li>
+          <li>Protect secrets and tenant data</li>
+          <li>Prefer read-only demos and least privilege</li>
+          <li>Validate in a safe environment before production</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <div class="eyebrow">Next Steps</div>
+        <h2>Try it on one small automation task.</h2>
+        <ul>
+          <li>Use the goal, context, constraints, output pattern</li>
+          <li>Ask Copilot to explain before changing code</li>
+          <li>Keep a personal prompt library</li>
+          <li>Build review and testing into the loop</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <div class="eyebrow">Q&A</div>
+        <h2>What automation task would you try first?</h2>
+        <p>Good candidate: something repetitive, non-production, inspectable, and useful enough that improving it would save real time.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="footer" aria-hidden="true">
+    <span id="counter">1 / 11</span>
+    <div class="bar"><span id="progress"></span></div>
+    <span>Use left and right arrow keys</span>
+  </div>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const counter = document.querySelector('#counter');
+    const progress = document.querySelector('#progress');
+    let current = 0;
+
+    function showSlide(index) {
+      current = Math.max(0, Math.min(index, slides.length - 1));
+      slides.forEach((slide, slideIndex) => {
+        slide.classList.toggle('active', slideIndex === current);
+      });
+      counter.textContent = `${current + 1} / ${slides.length}`;
+      progress.style.width = `${((current + 1) / slides.length) * 100}%`;
+    }
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowRight' || event.key === 'PageDown' || event.key === ' ') {
+        event.preventDefault();
+        showSlide(current + 1);
+      }
+
+      if (event.key === 'ArrowLeft' || event.key === 'PageUp') {
+        event.preventDefault();
+        showSlide(current - 1);
+      }
+
+      if (event.key === 'Home') {
+        showSlide(0);
+      }
+
+      if (event.key === 'End') {
+        showSlide(slides.length - 1);
+      }
+    });
+
+    showSlide(0);
+  </script>
+</body>
+</html>
