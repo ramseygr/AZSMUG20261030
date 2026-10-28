@@ -17,16 +17,19 @@ The `demo-baseline` Git tag marks the initial presentation and demo materials.
 Commit useful enhancements separately from slide and speaker-note updates so
 individual demo changes are easy to review.
 
-To reset only the rough inventory script to the original demo baseline, run the
-following from the repository root:
+Keep [rough-inventory.ps1](demos/azure-resource-inventory/rough-inventory.ps1)
+unchanged as the starter. Use [inventory.ps1](demos/azure-resource-inventory/inventory.ps1)
+for all live demo edits and enhancements.
+
+To reset only the working demo script, run the following from the repository root:
 
 ```powershell
-git diff -- demos/azure-resource-inventory/rough-inventory.ps1
-git restore --source=demo-baseline --worktree -- demos/azure-resource-inventory/rough-inventory.ps1
+git diff -- demos/azure-resource-inventory/inventory.ps1
+Copy-Item -LiteralPath .\demos\azure-resource-inventory\rough-inventory.ps1 -Destination .\demos\azure-resource-inventory\inventory.ps1 -Force
 ```
 
-The restore command discards uncommitted working-copy edits to that script.
-Commit or copy any edits you want to keep first. It does not reset slides, notes,
+The copy command overwrites the working script with the starter.
+Commit or copy any enhancements you want to keep first. It does not reset slides, notes,
 the Git index, generated exports, or Azure resources.
 
 ## Public repository safety
@@ -36,6 +39,6 @@ out of commits. Generated CSV files, local environment files, private key files,
 and local Azure Developer CLI state are ignored by Git. The included mock data
 uses demo resource names.
 
-The rough script requires Azure PowerShell and an authenticated Azure context.
+The inventory scripts require Azure PowerShell and an authenticated Azure context.
 Review the target subscription before running it. It lists resources and writes a
 local CSV; demos should remain read-only against Azure.

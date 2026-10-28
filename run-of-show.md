@@ -23,7 +23,7 @@ Plan for a 60-minute user group session:
 | Title and framing | Slides | 5 min | `slides/index.html`, `sections/01-welcome-and-framing.md` |
 | Copilot in VS Code overview | Slides + VS Code | 8 min | `sections/02-copilot-in-vscode.md` |
 | Prompting basics | Slides | 8 min | `sections/03-prompting-basics.md`, `resources/prompt-patterns.md` |
-| Demo 1: explain and improve a script | VS Code | 8 min | `demos/azure-resource-inventory/rough-inventory.ps1` |
+| Demo 1: explain and improve a script | VS Code | 8 min | `demos/azure-resource-inventory/inventory.ps1` |
 | Cloud automation scenarios | Slides | 5 min | `sections/04-cloud-automation-demo-ideas.md` |
 | Demo 2: build the inventory helper | VS Code | 15 min | `demos/azure-resource-inventory/demo-prompts.md` |
 | Guardrails | Slides | 6 min | `sections/06-responsible-use-and-guardrails.md` |
@@ -44,6 +44,7 @@ Plan for a 60-minute user group session:
 - Copilot Chat visible and signed in.
 - Terminal font size increased.
 - Demo files opened in editor tabs.
+- Use `demos/azure-resource-inventory/inventory.ps1` for live script edits; keep `rough-inventory.ps1` unchanged as the reset source.
 - Any Azure tenant, subscription, or resource names hidden or sanitized.
 - Backup demo prompts available in `demos/azure-resource-inventory/demo-prompts.md`.
 

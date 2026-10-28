@@ -1,5 +1,8 @@
 # Demo Prompts
 
+Use `inventory.ps1` as the script context for these prompts and make all script
+edits there. Leave `rough-inventory.ps1` unchanged so it remains the reset source.
+
 ## Explain The Script
 
 ```text
