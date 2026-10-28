@@ -29,6 +29,19 @@ Plan for a 60-minute user group session:
 | Guardrails | Slides | 6 min | `sections/06-responsible-use-and-guardrails.md` |
 | Wrap-up and next steps | Slides | 5 min | `sections/07-wrap-up.md` |
 
+## Optional Closing Showcase
+
+Before Q&A, use the app showcase slide to open:
+
+- [EventPin](https://www.eventpin.net/): An interactive attendee-origin map.
+- [Ride Radar](https://rideradar.net/): Cyclist-focused weather and ride conditions.
+- [Strip Stumble](https://www.stripstumble.com/): A Las Vegas Strip guide created by a colleague of Greg's, not by Greg.
+
+Then use the Meta Muse slide to open [Meta Muse](https://muse.ai/) and walk
+through one or two examples. All hyperlinks in the slide deck open in a new
+tab or window, leaving the presentation open. This showcase is additional to
+the segment timings above; shorten earlier sections or use it only if time permits.
+
 ## Transition Notes
 
 - Keep the slide deck open in a browser.

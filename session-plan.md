@@ -1,8 +1,8 @@
-# GitHub Copilot 101 with Cloud Automation
+# Vibe Coding 101: GitHub Copilot, VS Code, and the Future of Cloud Automation
 
 ## Session Details
 
-- **Event:** Azure Systems Management User Group
+- **Event:** Arizona Systems Management User Group
 - **Date:** October 30, 2026
 - **Audience:** Cloud engineers, systems administrators, automation engineers, DevOps practitioners, and developers getting started with AI-assisted coding in Visual Studio Code
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>GitHub Copilot 101 with Cloud Automation</title>
+  <title>Vibe Coding 101: GitHub Copilot, VS Code, and the Future of Cloud Automation</title>
   <style>
     :root {
       --bg: #f6f0e6;
@@ -24,7 +24,9 @@
 
     body {
       margin: 0;
-      min-height: 100vh;
+      height: 100vh;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
       color: var(--ink);
       background:
         linear-gradient(90deg, rgba(0, 120, 212, 0.08) 1px, transparent 1px),
@@ -36,8 +38,8 @@
     }
 
     .deck {
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
       position: relative;
     }
 
@@ -46,7 +48,8 @@
       inset: 0;
       display: none;
       padding: clamp(32px, 6vw, 84px);
-      align-items: center;
+      align-items: safe center;
+      overflow: auto;
     }
 
     .slide.active {
@@ -56,6 +59,59 @@
     .content {
       width: min(1180px, 100%);
       margin: 0 auto;
+    }
+
+    .presenter {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(220px, 360px);
+      align-items: center;
+      gap: clamp(28px, 5vw, 72px);
+    }
+
+    .presenter-photo {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 3px solid var(--ink);
+      box-shadow: 12px 12px 0 var(--cyan);
+    }
+
+    .presenter-location {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--cyan);
+    }
+
+    .presenter-location svg {
+      width: 32px;
+      height: 56px;
+      flex-shrink: 0;
+    }
+
+    .presenter-location .cycling-icon {
+      height: 32px;
+    }
+
+    .presenter-details {
+      display: grid;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .presenter-details p {
+      margin: 0;
+      font-size: clamp(18px, 1.7vw, 26px);
+      line-height: 1.35;
+    }
+
+    a {
+      color: var(--cyan);
+      text-underline-offset: 4px;
+    }
+
+    .demo a {
+      color: #8dccff;
     }
 
     .eyebrow {
@@ -86,6 +142,15 @@
 
     h1 {
       font-size: clamp(54px, 8.2vw, 118px);
+    }
+
+    .title-subtitle {
+      margin: 24px 0 0;
+      max-width: 980px;
+      color: var(--ink);
+      font-size: clamp(28px, 3.2vw, 46px);
+      font-weight: 650;
+      line-height: 1.15;
     }
 
     h2 {
@@ -226,14 +291,13 @@
       color: #dce7ea;
     }
 
-    .footer {
-      position: fixed;
-      left: 28px;
-      right: 28px;
-      bottom: 22px;
-      display: flex;
+    .slide-status {
+      display: grid;
+      grid-template-columns: auto minmax(80px, 160px) auto;
       align-items: center;
-      justify-content: space-between;
+      justify-content: end;
+      gap: 12px;
+      padding: 12px 28px;
       color: var(--muted);
       font-size: 14px;
       font-weight: 750;
@@ -241,7 +305,7 @@
     }
 
     .bar {
-      width: min(340px, 40vw);
+      width: 100%;
       height: 8px;
       border: 1px solid var(--ink);
       background: rgba(255, 250, 240, 0.85);
@@ -256,23 +320,29 @@
     }
 
     @media (max-width: 860px) {
-      body {
-        overflow: auto;
+      .slide-status {
+        grid-template-columns: auto minmax(80px, 160px);
+        padding: 12px 22px;
       }
 
-      .deck {
-        min-height: 100vh;
-        height: auto;
+      .slide-status .navigation-hint {
+        grid-column: 1 / -1;
+        justify-self: end;
+        font-size: 12px;
       }
 
       .slide {
-        min-height: 100vh;
-        padding: 28px 22px 76px;
+        padding: 28px 22px;
       }
 
       .grid,
-      .flow {
+      .flow,
+      .presenter {
         grid-template-columns: 1fr;
+      }
+
+      .presenter-photo {
+        max-width: 280px;
       }
 
       .tile,
@@ -283,6 +353,8 @@
 
     @media print {
       body {
+        display: block;
+        height: auto;
         overflow: visible;
         background: white;
       }
@@ -293,27 +365,80 @@
         display: block;
         width: auto;
         height: auto;
+        overflow: visible;
         page-break-after: always;
       }
 
-      .footer {
+      .slide-status {
         display: none;
       }
     }
   </style>
 </head>
 <body>
+  <div class="slide-status" aria-hidden="true">
+    <span id="counter">1 / 16</span>
+    <div class="bar"><span id="progress"></span></div>
+    <span class="navigation-hint">Use left and right arrow keys</span>
+  </div>
+
   <main class="deck" aria-live="polite">
     <section class="slide active">
       <div class="content">
-        <div class="eyebrow">Azure Systems Management User Group</div>
-        <h1>GitHub Copilot 101 with Cloud Automation</h1>
+        <div class="eyebrow">Arizona Systems Management User Group</div>
+        <h1>Vibe Coding 101</h1>
+        <p class="title-subtitle">GitHub Copilot, VS Code, and the Future of Cloud Automation</p>
         <p class="lead">A practical introduction to using Copilot in Visual Studio Code for scripts, troubleshooting, documentation, and small operational tools.</p>
         <div class="meta">
           <span class="pill">October 30, 2026</span>
           <span class="pill">VS Code</span>
           <span class="pill">Cloud Automation</span>
         </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content presenter">
+        <div>
+          <div class="eyebrow">Meet Your Presenter</div>
+          <h2>Greg Ramsey</h2>
+          <p class="lead">Senior Distinguished Engineer / Senior Architect</p>
+          <p>Dell Technologies</p>
+          <p class="presenter-location">
+            <svg viewBox="0 0 32 56" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M16 2v8M10 14l6-4 6 4M3 17h26l-7 5H10zM12 22l2 10-5 21M20 22l-2 10 5 21M14 32h4M11 45h10M6 54h20"/>
+            </svg>
+            <span>Based in Seattle</span>
+          </p>
+          <p class="presenter-location">
+            <svg class="cycling-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="7" cy="23" r="6"/>
+              <circle cx="25" cy="23" r="6"/>
+              <path d="M7 23l6-12 6 12H7l14-12 4 12M10 11h6M21 11l-2-5h5"/>
+            </svg>
+            <span>Enjoys cycling</span>
+          </p>
+          <div class="presenter-details">
+            <p><strong>X:</strong> <a href="https://x.com/ramseyg" target="_blank" rel="noopener noreferrer">@ramseyg</a></p>
+            <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/ramseyg/" target="_blank" rel="noopener noreferrer">Greg Ramsey</a></p>
+          </div>
+        </div>
+        <img class="presenter-photo" src="images/greg-ramsey.jpg" alt="Greg Ramsey" width="400" height="400">
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <div class="eyebrow">Before We Begin</div>
+        <h2>We all come to AI with different experience and perspectives.</h2>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
+        <div class="eyebrow">Keep The Trajectory In Mind</div>
+        <h2>Today's AI is a starting point, not the ceiling.</h2>
+        <p class="lead">Expect capabilities to improve. Keep your judgment in the loop.</p>
       </div>
     </section>
 
@@ -425,18 +550,42 @@ Output: The format I want back.</div>
 
     <section class="slide">
       <div class="content">
+        <div class="eyebrow">Beyond Scripts: App Showcase</div>
+        <h2>Small ideas. Useful apps.</h2>
+        <div class="grid">
+          <div class="tile">
+            <strong><a href="https://www.eventpin.net/" target="_blank" rel="noopener noreferrer">EventPin</a></strong>
+            <span>An interactive map showing where event attendees are from.</span>
+          </div>
+          <div class="tile">
+            <strong><a href="https://rideradar.net/" target="_blank" rel="noopener noreferrer">Ride Radar</a></strong>
+            <span>Cyclist-focused weather forecasts with daylight temperatures, rain, wind, and UV conditions.</span>
+          </div>
+          <div class="tile">
+            <strong><a href="https://www.stripstumble.com/" target="_blank" rel="noopener noreferrer">Strip Stumble</a></strong>
+            <span>Created by a colleague of Greg's. A Las Vegas Strip guide to food, drinks, happy hours, entertainment, and printable maps.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content demo">
+        <div class="eyebrow">One More Live Look</div>
+        <h2>Explore Meta Muse.</h2>
+        <p>Switch from slides to a live walkthrough of one or two examples.</p>
+        <p><a href="https://muse.ai/" target="_blank" rel="noopener noreferrer">Open Meta Muse</a></p>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="content">
         <div class="eyebrow">Q&A</div>
         <h2>What automation task would you try first?</h2>
         <p>Good candidate: something repetitive, non-production, inspectable, and useful enough that improving it would save real time.</p>
       </div>
     </section>
   </main>
-
-  <div class="footer" aria-hidden="true">
-    <span id="counter">1 / 11</span>
-    <div class="bar"><span id="progress"></span></div>
-    <span>Use left and right arrow keys</span>
-  </div>
 
   <script>
     const slides = Array.from(document.querySelectorAll('.slide'));

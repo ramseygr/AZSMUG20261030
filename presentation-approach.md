@@ -72,7 +72,7 @@ Best when:
 
 ## Proposed Slide List
 
-1. Title: GitHub Copilot 101 with Cloud Automation
+1. Title: Vibe Coding 101: GitHub Copilot, VS Code, and the Future of Cloud Automation
 2. Why this matters for cloud and systems work
 3. What "vibe coding" means in practice
 4. Copilot in VS Code: where it shows up

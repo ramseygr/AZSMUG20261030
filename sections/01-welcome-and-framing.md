@@ -10,7 +10,7 @@ GitHub Copilot is most useful when you treat it as a coding partner: you bring t
 
 ## Talking Points
 
-- Welcome attendees to the Azure Systems Management User Group session.
+- Welcome attendees to the Arizona Systems Management User Group session.
 - Explain that the session is beginner-friendly and demo-oriented.
 - Frame the audience broadly: cloud engineers, systems administrators, DevOps practitioners, automation engineers, and developers.
 - Define "vibe coding" as a practical workflow, not magic: describe the goal, generate a starting point, review the result, test it, refine it, and keep moving.
@@ -25,6 +25,11 @@ GitHub Copilot is most useful when you treat it as a coding partner: you bring t
 - Session title slide.
 - Simple workflow diagram: idea -> prompt -> draft -> review -> test -> refine.
 - Screenshot of VS Code with Copilot Chat visible.
+
+## Opening Notes After The Presenter Introduction
+
+- **Different starting points:** "We all come to AI with different experience and perspectives." Acknowledge that some attendees are trying it for the first time, while others use it daily. No shared baseline is assumed.
+- **Room to improve:** "Today's AI is a starting point, not the ceiling." Frame this as an expectation of progress, not a promise that every model update improves every task. Today's limitations are a reason to keep learning, reviewing, and testing.
 
 ## Demo Setup Notes
 
