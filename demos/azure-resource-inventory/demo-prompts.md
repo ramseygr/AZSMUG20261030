@@ -17,8 +17,7 @@ for this script and explain why it would be a better name.
 ```text
 Give me a brief summary of the script, then copy inventory.ps1
 to the recommended filename from the previous step. Do not change
-the script contents or overwrite an existing file. Leave
-inventory.ps1 and rough-inventory.ps1 unchanged.
+the script contents or overwrite an existing file. Leave inventory.ps1 unchanged.
 ```
 
 ## 3. Review For Risk
