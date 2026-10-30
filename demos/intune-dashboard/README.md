@@ -2,6 +2,9 @@
 
 Single-page dashboard (plain HTML/CSS/JS) showing fleet compliance, stale devices, and OS version mix.
 
+Use the [live demo prompts](demo-prompts.md) to walk through building the UI,
+adding authentication and Graph data, and implementing compliance drill-down.
+
 ## Auth
 
 Uses [MSAL.js v4](https://www.npmjs.com/package/@azure/msal-browser) from the jsDelivr CDN as an ES module.
@@ -9,6 +12,24 @@ Uses [MSAL.js v4](https://www.npmjs.com/package/@azure/msal-browser) from the js
 - Entra ID app registration: **Single-page application** platform, redirect URI `http://localhost:3000/`
 - Delegated Graph permission: `DeviceManagementManagedDevices.Read.All`
 - Public client with auth code + PKCE. **No client secret** — never add one to this repo.
+
+### Configure live access
+
+Consult your security team before using this demo with your environment.
+
+1. Create or use an approved Microsoft Entra app registration with the
+   **Single-page application** platform and redirect URI `http://localhost:3000/`.
+2. Add the Microsoft Graph **delegated** permission
+   `DeviceManagementManagedDevices.Read.All` and obtain administrator consent.
+3. In [app.js](app.js), replace `MSAL_CONFIG.auth.clientId` and the tenant ID
+   in `MSAL_CONFIG.auth.authority` with your own registration's identifiers.
+   The included IDs identify the demo registration; they are not credentials
+   and should not be assumed to work for another organization.
+4. Ensure the signing-in user has appropriate Intune access as described below.
+5. Open http://localhost:3000/ without `?demo=1` to use live data after sign-in.
+
+Do not add a client secret. Do not share access tokens or real device exports
+in prompts or commits.
 
 ## Run locally
 
@@ -18,7 +39,11 @@ The page must be served from `http://localhost:3000/` (ES modules and the MSAL r
 python -m http.server 3000 --bind 127.0.0.1 --directory demos\intune-dashboard
 ```
 
-Then open http://localhost:3000/ and allow popups for `localhost`.
+Run the command from the repository root with Python installed. Then open
+http://localhost:3000/ and allow popups for `localhost`.
+
+Internet access to the jsDelivr CDN is required to load MSAL, even with sample
+data. Live access also needs Microsoft sign-in and Graph connectivity.
 
 ## Data
 
@@ -36,6 +61,17 @@ Then open http://localhost:3000/ and allow popups for `localhost`.
 
 Open http://localhost:3000/?demo=1 to always render the 14-device sample fleet, even when signed in. It's handy for presenting stale devices and a varied OS mix with a small tenant. A **Demo** badge appears in the header, and no Graph call is made.
 
+This is not an offline mode: the app still imports MSAL from the CDN and
+initializes it before rendering the sample fleet.
+
 ## Compliance drill-down
 
 Click **Compliant**, **Noncompliant**, or **Unknown** in the Fleet compliance card, or tab to it and press Enter. A dialog lists the matching devices with their user, OS, raw Intune compliance state, and last sync. Close it with ×, Esc, or a click outside the dialog. Buckets with zero devices are disabled.
+
+## Optional follow-up ideas
+
+The [prompt guide](demo-prompts.md) includes enhancements to try live.
+The prepared app already includes thresholds, search, sorting, CSV export,
+empty states, and day-based last-sync ages. A dedicated refresh button,
+hour-level relative times, and a repository/permission attribution footer
+are follow-up ideas, not implemented features.

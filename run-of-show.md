@@ -1,66 +1,154 @@
 # Run Of Show
 
-## Presentation Format
+The [slide deck](slides/index.html) is the source of truth for slide content
+and order. This is the single presenter guide; demo prompt guides contain the
+copyable prompts. Use browser slides for framing, VS Code for Copilot, and the
+local dashboard for the application walkthrough.
 
-Use the hybrid approach:
+## Timing: 60 Minutes
 
-- Browser-based HTML slides for structure and transitions.
-- Visual Studio Code for Copilot walkthroughs and live demos.
-- Markdown section files as speaker notes and backup material.
-
-## Target Length
-
-Plan for a 60-minute user group session:
-
-- 45 minutes of prepared content and demos.
-- 10 minutes of Q&A.
-- 5 minutes of buffer for transitions, setup, and audience questions during demos.
-
-## Session Flow
-
-| Segment | Format | Time | Files |
+| Segment | Slides | Time | Presenter cue |
 | --- | --- | ---: | --- |
-| Title and framing | Slides | 5 min | `slides/index.html`, `sections/01-welcome-and-framing.md` |
-| Copilot in VS Code overview | Slides + VS Code | 8 min | `sections/02-copilot-in-vscode.md` |
-| Prompting basics | Slides | 8 min | `sections/03-prompting-basics.md`, `resources/prompt-patterns.md` |
-| Demo 1: explain and improve a script | VS Code | 8 min | `demos/azure-resource-inventory/inventory.ps1` |
-| Cloud automation scenarios | Slides | 5 min | `sections/04-cloud-automation-demo-ideas.md` |
-| Demo 2: build the inventory helper | VS Code | 15 min | `demos/azure-resource-inventory/demo-prompts.md` |
-| Guardrails | Slides | 6 min | `sections/06-responsible-use-and-guardrails.md` |
-| Wrap-up and next steps | Slides | 5 min | `sections/07-wrap-up.md` |
+| Welcome, presenter, expectations, and security | 1-5 | 5 min | Different starting points; demos are not production guidance. |
+| Why it matters and the vibe coding loop | 6-7 | 4 min | Prompt, draft, review, test, refine, document. |
+| Copilot in VS Code | 8 | 4 min | Show inline suggestions, chat, and workspace context. |
+| Prompting basics | 9 | 4 min | Goal, context, constraints, output. |
+| Cloud automation use cases | 10 | 2 min | Bridge from scripts to simple web apps. |
+| Demo 1: explain and improve a script | 11 | 8 min | Explain, identify risks, improve, and document. |
+| Demo 2: Intune endpoint dashboard | 12 | 12 min | Sample fleet, compliance drill-down, and iterative refinement. |
+| Guardrails | 13 | 2 min | Generated code is a draft. |
+| Looking ahead: spec-driven development | 14 | 1 min | Mention the concept; no tooling walkthrough. |
+| Next steps and app showcase | 15-16 | 3 min | One small task first; showcase only as time permits. |
+| Q&A | 17 | 10 min | Invite audience scenarios. |
+| Buffer | Throughout | 5 min | Transitions, questions, and demo delays. |
+| **Total** | | **60 min** | **45 prepared + 10 Q&A + 5 buffer** |
 
-## Optional Closing Showcase
-
-Before Q&A, use the app showcase slide to open:
-
-- [EventPin](https://www.eventpin.net/): An interactive attendee-origin map.
-- [Ride Radar](https://rideradar.net/): Cyclist-focused weather and ride conditions.
-- [Strip Stumble](https://www.stripstumble.com/): A Las Vegas Strip guide created by a colleague of Greg's, not by Greg.
-
-Then use the Meta Muse slide to open [Meta Muse](https://muse.ai/) and walk
-through one or two examples. All hyperlinks in the slide deck open in a new
-tab or window, leaving the presentation open. This showcase is additional to
-the segment timings above; shorten earlier sections or use it only if time permits.
-
-## Transition Notes
-
-- Keep the slide deck open in a browser.
-- Keep VS Code open to this workspace with the Explorer visible.
-- Use the demo transition slides as a cue to switch windows.
-- After each demo, return to the slide deck to reset the audience context.
-- Keep a terminal open, but avoid running commands that require production access during the first pass.
+If running behind, skip optional demo enhancements and external app visits.
+Keep the security framing, guardrails, and Q&A.
 
 ## Presenter Setup Checklist
 
-- Browser opened to `slides/index.html`.
-- VS Code zoom level increased for projector readability.
-- Copilot Chat visible and signed in.
-- Terminal font size increased.
-- Demo files opened in editor tabs.
-- Use `demos/azure-resource-inventory/inventory.ps1` for live script edits; keep `rough-inventory.ps1` unchanged as the reset source.
-- Any Azure tenant, subscription, or resource names hidden or sanitized.
-- Backup demo prompts available in `demos/azure-resource-inventory/demo-prompts.md`.
+- Open [the deck](slides/index.html); use the Home button or Home key to start.
+  Refresh preserves the current slide through its URL fragment.
+- Increase VS Code zoom and terminal font size for projector readability.
+- Verify Copilot is signed in and responding.
+- Open the working [inventory script](demos/azure-resource-inventory/inventory.ps1)
+  and its [prompt guide](demos/azure-resource-inventory/demo-prompts.md).
+- Keep [rough-inventory.ps1](demos/azure-resource-inventory/rough-inventory.ps1)
+  unchanged as the reset source. Follow the [reset instructions](demos/azure-resource-inventory/README.md)
+  before the session if needed; the copy overwrites working-script edits.
+- Check Azure PowerShell availability and the selected Azure context before
+  running the script. Keep real inventory exports and tenant data off screen.
+- Follow the [Intune setup guide](demos/intune-dashboard/README.md), start the
+  local server, and open http://localhost:3000/?demo=1.
+- Verify the sample fleet loads and a compliance category opens its device list.
+- Open the [Intune prompt guide](demos/intune-dashboard/demo-prompts.md) in
+  Markdown Preview (**Ctrl+Shift+V**) for large-screen reading and copying.
+- Test network access to Copilot and the MSAL CDN. Live Graph access additionally
+  needs an approved app registration, administrator consent, and user permissions.
+- Disable notifications and close unrelated or sensitive browser/editor tabs.
+
+## Opening And Framing: Slides 1-7
+
+- Welcome attendees; the session is beginner-friendly and demo-oriented.
+- Acknowledge different AI experience and perspectives. No common starting
+  level is assumed.
+- Today's AI is a starting point, not the ceiling. This is an expectation of
+  progress, not a promise that every update improves every task.
+- Examples are for demonstration only. Consult your security team and follow
+  organizational policies before using them in your environment.
+- Copilot helps draft and explain; the operator supplies intent, context,
+  constraints, and judgment.
+- Make the loop explicit: prompt, draft, review, test, refine, document.
+
+## Copilot And Prompting: Slides 8-10
+
+- Show where help appears: inline suggestions, chat, selected files, and
+  terminal output as context.
+- Ask for small, reviewable changes instead of a whole solution at once.
+- Use **goal, context, constraints, output**. Compare "write an Azure script"
+  with a request for a read-only inventory script and predictable CSV output.
+- Ask Copilot to identify assumptions and explain tradeoffs before execution.
+- Refer attendees to the [prompt handout](resources/prompt-patterns.md).
+- Use cases include inventory, explanation, troubleshooting, documentation,
+  and simple web apps. This sets up both demos before switching windows.
+
+## Demo 1: Script Explanation And Improvement
+
+Use the [inventory prompt guide](demos/azure-resource-inventory/demo-prompts.md)
+with [inventory.ps1](demos/azure-resource-inventory/inventory.ps1).
+
+1. Ask Copilot to explain the script before changing it.
+2. Ask for risks and assumptions: module availability, authentication, target
+   subscription, permissions, output path, and error handling.
+3. Request one improvement while keeping Azure operations read-only.
+4. Inspect the diff and validate the result before running it.
+5. If time permits, add comment-based help or generate usage documentation.
+
+Narrate what you check. Show at least one refinement rather than suggesting
+the first answer is finished. The script reads Azure resources and writes a
+local CSV; it does not create or modify Azure resources.
+
+## Demo 2: Intune Endpoint Dashboard
+
+Use the [dashboard](demos/intune-dashboard/README.md) and its
+[step-by-step prompts](demos/intune-dashboard/demo-prompts.md).
+
+1. Start with the sample fleet at http://localhost:3000/?demo=1.
+2. Show fleet compliance, OS version mix, and stale devices.
+3. Walk through the prompt progression: build the UI, add sign-in, connect
+   Graph, then add compliance drill-down.
+4. Click **Compliant**, **Noncompliant**, or **Unknown**. Show that the modal's
+   device list matches the selected category and count.
+5. Demonstrate one or two refinements: stale threshold, device-name search,
+   table sorting, or CSV export.
+6. Explain the live-data path without requiring a live sign-in on stage.
+
+MSAL handles Microsoft sign-in and token acquisition. The app uses that token
+to call Graph, which enforces granted access. The delegated permission is
+`DeviceManagementManagedDevices.Read.All`; the user also needs appropriate
+Intune access. Browser apps cannot keep a client secret.
+
+Demo mode makes no Graph calls, even when signed in. It still imports MSAL
+from the CDN and initializes it, so it is **not an offline fallback**.
+The optional refresh-button and attribution-footer prompts are ideas for
+further work, not features of the prepared dashboard.
+
+## Guardrails And Looking Ahead: Slides 13-14
+
+- Review generated code before running it; protect secrets, tokens, and data.
+- Prefer least privilege and read-only examples. Validate in a safe environment.
+- Watch target tenant/subscription, dependency assumptions, pagination,
+  throttling, and errors. Speed does not replace operational judgment.
+- Vibe coding explores through conversation. Spec-driven development makes
+  agreed requirements and acceptance criteria explicit before implementation.
+- Exploration can discover requirements; a shared spec helps as scope, risk,
+  and team coordination grow. Both still require review and testing.
+- Spec-driven development is outside today's scope. Offer
+  [GitHub Spec Kit](https://github.com/github/spec-kit) for further exploration.
+
+## Closing And Q&A: Slides 15-17
+
+- Try one repetitive, non-production, inspectable task.
+- Explain before changing; build review and testing into the loop.
+- Keep a personal prompt library.
+- If time permits, open the showcase links:
+  [EventPin](https://www.eventpin.net/),
+  [Ride Radar](https://rideradar.net/), and
+  [Strip Stumble](https://www.stripstumble.com/).
+  Strip Stumble was created by a colleague of Greg's, not Greg.
+- Ask: "What automation task would you try first?" Follow up with what
+  constraints, acceptance checks, or team guardrails it would need.
 
 ## Backup Plan
 
-If live Copilot generation is slow or the network is unreliable, use the prepared prompts and rough script as the demo material. Walk through how you would ask Copilot to explain, improve, and document the script, then show the expected shape of the result verbally.
+- **Copilot slow or unavailable:** Walk through prepared prompts and existing
+  code. Explain how each request changes the result; do not wait indefinitely.
+- **Azure unavailable:** Explain the starter script and use
+  [mock inventory data](demos/azure-resource-inventory/mock-resource-data.json)
+  to discuss the output shape. The starter does not automatically load mock data.
+- **Graph access unavailable:** Use the dashboard's sample fleet with `?demo=1`.
+- **CDN or MSAL unavailable:** Use the dashboard source and prompt guide instead;
+  sample mode still depends on MSAL loading and initializing.
+- **External showcase unavailable:** Stay on the showcase slide and describe
+  the examples rather than troubleshooting external sites.

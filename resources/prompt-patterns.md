@@ -1,4 +1,4 @@
-# Prompt Patterns For Cloud Automation
+# Prompt Patterns For Cloud Automation And Simple Web Apps
 
 ## Core Pattern
 
@@ -23,6 +23,18 @@ Output: Return a PowerShell script with parameters, comments, and usage examples
 ```text
 Explain this script section by section. Identify the Azure commands it uses, what permissions it likely requires, whether it changes anything, and what I should verify before running it.
 ```
+
+## Simple Web App
+
+```text
+Goal: Build a single-page endpoint dashboard.
+Context: Use plain HTML, CSS, and JavaScript with local sample data.
+Constraints: No frameworks, build step, credentials, or live API calls.
+Output: Three files showing fleet compliance, stale devices, and OS versions.
+```
+
+Start with sample data, review the interface, and add authentication and live
+data only after confirming the approved permissions and security requirements.
 
 ## Troubleshooting
 

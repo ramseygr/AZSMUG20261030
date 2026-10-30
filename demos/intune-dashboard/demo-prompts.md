@@ -122,6 +122,11 @@ widget counts and the dialog list.
 
 **Pick one enhancement at a time. Review, test, then refine.**
 
+The prepared dashboard already includes thresholds, search, sorting, CSV
+export, empty states, and day-based last-sync ages. These prompts show how
+to build those features incrementally. A refresh button, hour-level relative
+times, and the attribution footer remain optional follow-up ideas.
+
 ### A. Stale-device threshold
 
 ```text

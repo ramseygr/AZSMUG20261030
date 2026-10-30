@@ -4,12 +4,36 @@ Materials for the Arizona Systems Management User Group session on October 30, 2
 
 ## Contents
 
-- [Slide deck](slides/index.html): Open locally in a browser; use the arrow keys to navigate. No build step is required.
-- [Session plan](session-plan.md): Abstract, objectives, and outline.
-- [Run of show](run-of-show.md): Presenter flow and setup checklist.
-- [Speaker notes](sections/): Section-by-section talking points.
+- [Slide deck](slides/index.html): Standalone, 17-slide browser presentation. No build step is required.
+- [Session plan](session-plan.md): Abstract, objectives, and session scope.
+- [Run of show](run-of-show.md): Current presenter guide, timing, talking points, setup, and fallback plans.
 - [Azure inventory demo](demos/azure-resource-inventory/README.md): Rough PowerShell starter, prepared prompts, and mock data.
+- [Intune dashboard demo](demos/intune-dashboard/README.md): Setup, authentication, and dashboard features.
+- [Intune demo prompts](demos/intune-dashboard/demo-prompts.md): Copyable prompts for building and refining the dashboard.
 - [Prompt patterns](resources/prompt-patterns.md): Reusable attendee prompts.
+
+## Presenting
+
+Open [the slide deck](slides/index.html) directly in a browser.
+
+- Use Left/Right arrows, Page Up/Page Down, or Space (forward) to navigate.
+- Use the Home key or the home icon beside the progress bar to return to slide 1.
+- Use End to jump to the final slide.
+- The URL fragment stores the current slide, so refreshing preserves your position.
+
+The deck is the source of truth for slide content and order. The
+[run of show](run-of-show.md) is the single presenter-notes document.
+
+For the Intune demo, run this from the repository root with Python installed:
+
+```powershell
+python -m http.server 3000 --bind 127.0.0.1 --directory demos\intune-dashboard
+```
+
+Open http://localhost:3000/?demo=1 for the sample fleet without Graph calls.
+Internet access is still required for the MSAL CDN import. See the
+[dashboard setup guide](demos/intune-dashboard/README.md) before using live data.
+Use **Ctrl+Shift+V** in VS Code to preview the Markdown prompt guides.
 
 ## Demo baseline and resets
 
@@ -38,6 +62,10 @@ Keep credentials, tenant-specific information, and real resource inventory expor
 out of commits. Generated CSV files, local environment files, private key files,
 and local Azure Developer CLI state are ignored by Git. The included mock data
 uses demo resource names.
+
+The dashboard currently contains demo app-registration client and tenant IDs.
+These are public identifiers, not credentials; use your own approved registration
+for live access. Never add a client secret or access token to the repository.
 
 The inventory scripts require Azure PowerShell and an authenticated Azure context.
 Review the target subscription before running it. It lists resources and writes a
