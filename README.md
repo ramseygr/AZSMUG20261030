@@ -17,6 +17,7 @@ Materials for the Arizona Systems Management User Group session on October 30, 2
 Open [the slide deck](slides/index.html) directly in a browser.
 
 - Use Left/Right arrows, Page Up/Page Down, or Space (forward) to navigate.
+- Swipe left or right on a touchscreen to move between slides.
 - Use the Home key or the home icon beside the progress bar to return to slide 1.
 - Use End to jump to the final slide.
 - The URL fragment stores the current slide, so refreshing preserves your position.

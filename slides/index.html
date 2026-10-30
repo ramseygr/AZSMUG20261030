@@ -50,6 +50,7 @@
       padding: clamp(32px, 6vw, 84px);
       align-items: safe center;
       overflow: auto;
+      touch-action: pan-y;
     }
 
     .slide.active {
@@ -368,6 +369,17 @@
       font-weight: 500;
     }
 
+    .closing-share {
+      display: grid;
+      justify-items: center;
+      gap: 12px;
+    }
+
+    .repo-link {
+      font-size: clamp(12px, 1vw, 16px);
+      font-weight: 500;
+    }
+
     .deck-qr:hover .deck-url,
     .deck-qr:focus-visible .deck-url {
       text-decoration: underline;
@@ -518,7 +530,7 @@
         <path d="m3 10 9-7 9 7M5 9v12h14V9M9 21v-7h6v7"/>
       </svg>
     </button>
-    <span class="navigation-hint">Use left and right arrow keys</span>
+    <span class="navigation-hint">Swipe or use arrow keys</span>
   </div>
 
   <main class="deck" aria-live="polite">
@@ -744,11 +756,14 @@ Output: The format I want back.</div>
             <h2>What automation task would you try first?</h2>
             <p>Good candidate: something repetitive, non-production, inspectable, and useful enough that improving it would save real time.</p>
           </div>
-          <a class="deck-qr" href="https://ramseygr.github.io/AZSMUG20261030/" target="_blank" rel="noopener noreferrer" aria-label="Open the published slide deck">
-            <img src="images/deck-qr.svg" alt="QR code linking to the published slide deck">
-            <span>Scan to open the slides</span>
-            <span class="deck-url">ramseygr.github.io/AZSMUG20261030</span>
-          </a>
+          <div class="closing-share">
+            <a class="deck-qr" href="https://ramseygr.github.io/AZSMUG20261030/" target="_blank" rel="noopener noreferrer" aria-label="Open the published slide deck">
+              <img src="images/deck-qr.svg" alt="QR code linking to the published slide deck">
+              <span>Scan to open the slides</span>
+              <span class="deck-url">ramseygr.github.io/AZSMUG20261030</span>
+            </a>
+            <a class="repo-link" href="https://github.com/ramseygr/AZSMUG20261030" target="_blank" rel="noopener noreferrer">Source: GitHub repository</a>
+          </div>
         </div>
       </div>
     </section>
@@ -759,7 +774,9 @@ Output: The format I want back.</div>
     const counter = document.querySelector('#counter');
     const progress = document.querySelector('#progress');
     const homeButton = document.querySelector('#home-button');
+    const deck = document.querySelector('.deck');
     let current = 0;
+    let touchStart = null;
 
     function showSlide(index) {
       current = Math.max(0, Math.min(index, slides.length - 1));
@@ -789,6 +806,28 @@ Output: The format I want back.</div>
       if (event.key === 'End') {
         showSlide(slides.length - 1);
       }
+    });
+
+    deck.addEventListener('pointerdown', (event) => {
+      if (!event.isPrimary || event.pointerType !== 'touch'
+        || event.target.closest('a, button, input, textarea, select')) {
+        touchStart = null;
+        return;
+      }
+      touchStart = { x: event.clientX, y: event.clientY, pointerId: event.pointerId };
+    });
+
+    deck.addEventListener('pointerup', (event) => {
+      if (!touchStart || event.pointerId !== touchStart.pointerId) return;
+      const deltaX = event.clientX - touchStart.x;
+      const deltaY = event.clientY - touchStart.y;
+      touchStart = null;
+      if (Math.abs(deltaX) < 50 || Math.abs(deltaX) < Math.abs(deltaY) * 1.25) return;
+      showSlide(current + (deltaX < 0 ? 1 : -1));
+    });
+
+    deck.addEventListener('pointercancel', () => {
+      touchStart = null;
     });
 
     homeButton.addEventListener('click', () => showSlide(0));
