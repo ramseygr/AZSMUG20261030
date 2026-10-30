@@ -483,6 +483,17 @@
     }
 
     @media (max-width: 640px) {
+      body {
+        height: 100dvh;
+      }
+
+      .slide {
+        align-items: flex-start;
+        overflow-y: auto;
+        overscroll-behavior-y: contain;
+        -webkit-overflow-scrolling: touch;
+      }
+
       .slide-use-cases ul {
         grid-template-columns: 1fr;
       }
