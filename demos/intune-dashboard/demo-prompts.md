@@ -84,7 +84,26 @@ if the call fails.
 
 ---
 
-## 4. Add compliance drill-down
+## 4. Add demo mode
+
+**Goal:** Use the sample fleet by adding `?demo=1` to the URL.
+
+```text
+Add a demo mode controlled by the URL query parameter ?demo=1.
+
+When demo mode is enabled:
+- Always render the built-in sample device fleet, even if a user is signed in.
+- Do not make any Microsoft Graph calls.
+- Show a visible "Demo" badge in the dashboard header.
+
+Without ?demo=1, preserve the current sign-in and live Graph data behavior.
+Use URLSearchParams to read the query parameter. Make sure the app works at
+http://localhost:3000/?demo=1.
+```
+
+---
+
+## 5. Add compliance drill-down
 
 **Goal:** Click a compliance category to see the devices behind the count.
 
@@ -118,7 +137,7 @@ widget counts and the dialog list.
 
 ---
 
-## 5. Refine with small follow-up prompts
+## 6. Refine with small follow-up prompts
 
 **Pick one enhancement at a time. Review, test, then refine.**
 

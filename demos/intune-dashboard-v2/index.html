@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <title>Endpoint Overview | Fleet Console</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" type="module"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./index.html" aria-label="Fleet Console home">
+        <span class="brand-icon" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+        FLEET<span class="brand-light">CONSOLE</span>
+      </a>
+      <div class="session">
+        <span id="session-label">Not signed in</span>
+        <button id="load-button" class="button" type="button" disabled>Load devices</button>
+        <button id="auth-button" class="button" type="button" disabled>Sign in</button>
+      </div>
+    </header>
+
+    <main>
+      <div class="page-heading">
+        <div>
+          <p class="eyebrow">DEVICE MANAGEMENT / OVERVIEW</p>
+          <h1>Endpoint overview<span class="title-dot">.</span></h1>
+          <p class="subtitle">A clear view of your fleet. A faster path to action.</p>
+        </div>
+        <span class="preview-badge"><span aria-hidden="true"></span> <span id="data-source-label">Microsoft Graph</span></span>
+      </div>
+
+      <div class="context-bar">
+        <span>WORKSPACE <strong id="workspace-label">Managed endpoints</strong></span>
+        <span id="updated-at">Not loaded</span>
+      </div>
+      <p id="auth-status" class="status" role="status" aria-live="polite">Initializing Microsoft Entra sign-in. Serve this folder at http://localhost:57627/.</p>
+      <p id="status" class="status" role="status" aria-live="polite">Sign in to load managed devices.</p>
+      <div class="filter-bar">
+        <div class="search-field">
+          <label for="device-search">Search by device name</label>
+          <input id="device-search" type="search" placeholder="Enter a device name..." autocomplete="off" aria-describedby="filter-summary" disabled>
+        </div>
+        <p id="filter-summary" role="status" aria-live="polite">Load devices to search.</p>
+      </div>
+
+      <section class="summary-grid" aria-label="Fleet summary">
+        <article class="summary-card">
+          <p class="metric-label">Total endpoints <span class="metric-icon" aria-hidden="true">&#9638;</span></p>
+          <p id="total-count" class="metric-value">--</p>
+          <p class="metric-note">Managed devices in this view</p>
+        </article>
+        <article class="summary-card">
+          <p class="metric-label">Compliance rate <span class="metric-icon green" aria-hidden="true">&#10003;</span></p>
+          <p id="compliance-rate" class="metric-value">--</p>
+          <p class="metric-note"><span class="dot green-bg"></span> Compliant across the full fleet</p>
+        </article>
+        <article class="summary-card">
+          <p class="metric-label">Needs attention <span class="metric-icon amber" aria-hidden="true">!</span></p>
+          <p id="attention-count" class="metric-value">--</p>
+          <p class="metric-note">Noncompliant or unknown status</p>
+        </article>
+        <article class="summary-card">
+          <p class="metric-label">Stale endpoints <span class="metric-icon purple" aria-hidden="true">&#9719;</span></p>
+          <p id="stale-count" class="metric-value">--</p>
+          <p class="metric-note">No sync in 30 days or more</p>
+        </article>
+      </section>
+
+      <div class="insights-grid">
+        <section class="panel" aria-labelledby="compliance-title">
+          <div class="panel-heading">
+            <div><p class="eyebrow">FLEET HEALTH</p><h2 id="compliance-title">Fleet compliance</h2></div>
+            <span id="compliance-scope" class="panel-tag">All endpoints</span>
+          </div>
+          <div class="compliance-headline"><strong id="compliant-percent">--</strong><span>of endpoints are compliant</span></div>
+          <div id="compliance-bar" class="compliance-bar" aria-hidden="true"></div>
+          <div id="compliance-breakdown" class="compliance-breakdown"></div>
+          <p class="panel-footnote">Select a category to view its devices. Unknown includes devices without a definitive compliance state.</p>
+        </section>
+        <section class="panel" aria-labelledby="os-title">
+          <div class="panel-heading">
+            <div><p class="eyebrow">PLATFORM DISTRIBUTION</p><h2 id="os-title">OS version mix</h2></div>
+            <span id="version-count" class="panel-tag">-- versions</span>
+          </div>
+          <div id="os-breakdown" class="os-breakdown"></div>
+        </section>
+      </div>
+
+      <section class="panel stale-panel" aria-labelledby="stale-title">
+        <div class="panel-heading">
+          <div><p class="eyebrow">REQUIRES REVIEW</p><h2 id="stale-title">Stale devices <span id="stale-table-count" class="count-badge">--</span></h2></div>
+          <span class="panel-tag">Last sync &ge; 30 days</span>
+        </div>
+        <p class="table-description">Endpoints that may be offline, retired, or no longer checking in. Select a column header to sort; select it again to reverse.</p>
+        <div class="table-scroll">
+          <table>
+            <caption class="sr-only">Devices matching the search that have not synced for at least 30 days</caption>
+            <thead><tr>
+              <th scope="col" aria-sort="none"><button class="sort-button" type="button" data-sort="deviceName">Device name <span aria-hidden="true"></span></button></th>
+              <th scope="col" aria-sort="none"><button class="sort-button" type="button" data-sort="osVersion">OS version <span aria-hidden="true"></span></button></th>
+              <th scope="col" aria-sort="none"><button class="sort-button" type="button" data-sort="compliance">Compliance <span aria-hidden="true"></span></button></th>
+              <th scope="col" aria-sort="ascending"><button class="sort-button" type="button" data-sort="lastSync">Last sync <span aria-hidden="true">&#9650;</span></button></th>
+              <th scope="col" class="align-right" aria-sort="none"><button class="sort-button" type="button" data-sort="daysInactive">Days inactive <span aria-hidden="true"></span></button></th>
+            </tr></thead>
+            <tbody id="stale-rows"></tbody>
+          </table>
+        </div>
+        <p id="stale-empty" class="empty-state" hidden>No stale devices. Every device with a known sync date checked in within 30 days.</p>
+        <p id="sync-note" class="panel-footnote"></p>
+      </section>
+      <footer><span><span class="dot purple-bg"></span> <span id="data-source-note">Microsoft Graph &middot; Read-only &middot; DeviceManagementManagedDevices.Read.All</span></span><span>Executive endpoint intelligence</span></footer>
+    </main>
+    <dialog id="compliance-dialog" class="compliance-dialog" aria-labelledby="compliance-dialog-title" aria-describedby="compliance-dialog-count">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">COMPLIANCE DRILL-DOWN</p>
+          <h2 id="compliance-dialog-title">Compliance devices</h2>
+          <p id="compliance-dialog-count" class="table-description"></p>
+        </div>
+        <button id="compliance-dialog-close" class="button" type="button" autofocus>Close</button>
+      </div>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Compliance device details">
+        <table>
+          <caption class="sr-only">Devices in the selected compliance category, sorted by device name</caption>
+          <thead>
+            <tr>
+              <th scope="col">Device name</th>
+              <th scope="col">User</th>
+              <th scope="col">OS and version</th>
+              <th scope="col">Original Intune compliance state</th>
+              <th scope="col">Last sync</th>
+            </tr>
+          </thead>
+          <tbody id="compliance-dialog-rows"></tbody>
+        </table>
+      </div>
+    </dialog>
+  </body>
+</html>
