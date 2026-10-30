@@ -8,7 +8,8 @@ edits there. Leave `rough-inventory.ps1` unchanged so it remains the reset sourc
 ```text
 Explain what this PowerShell script does. Call out any assumptions
 it makes and anything I should verify before running it in an
-Azure environment.
+Azure environment. Also suggest a clearer, descriptive filename
+for this script and explain why it would be a better name.
 ```
 
 ## Review For Risk
