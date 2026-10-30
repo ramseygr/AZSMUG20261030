@@ -98,8 +98,8 @@ When demo mode is enabled:
 - Show a visible "Demo" badge in the dashboard header.
 
 Without ?demo=1, preserve the current sign-in and live Graph data behavior.
-Use URLSearchParams to read the query parameter. Make sure demo mode works
-at the URL and port provided in Step 2, with ?demo=1 added.
+Use URLSearchParams to read the query parameter.
+Verify demo mode works with the Step 2 URL and port after adding ?demo=1.
 ```
 
 ---
