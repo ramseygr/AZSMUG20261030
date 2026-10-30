@@ -4,7 +4,7 @@ Materials for the Arizona Systems Management User Group session on October 30, 2
 
 ## Contents
 
-- [Slide deck](slides/index.html): Standalone, 17-slide browser presentation. No build step is required.
+- [Slide deck](slides/index.html): Standalone, 18-slide browser presentation. No build step is required.
 - [Session plan](session-plan.md): Abstract, objectives, and session scope.
 - [Run of show](run-of-show.md): Current presenter guide, timing, talking points, setup, and fallback plans.
 - [Azure inventory demo](demos/azure-resource-inventory/README.md): Rough PowerShell starter, prepared prompts, and mock data.
