@@ -46,8 +46,9 @@ https://cdn.jsdelivr.net/npm/@azure/msal-browser@4/+esm
 
 Use PublicClientApplication with these settings:
 - Ask me for the client ID and tenant ID. Don't invent them.
+- Ask me for the current redirect URI. Don't assume or invent one.
 - Authority: https://login.microsoftonline.com/<tenant-id>
-- Redirect URI: http://localhost:3000/ for local development.
+- Use the redirect URI I provide and make sure it matches the app registration.
 - Request exactly one scope:
   DeviceManagementManagedDevices.Read.All
 
