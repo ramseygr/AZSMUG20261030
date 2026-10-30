@@ -331,6 +331,49 @@
       color: #dce7ea;
     }
 
+    .closing-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) clamp(160px, 20vw, 230px);
+      align-items: center;
+      gap: clamp(28px, 5vw, 64px);
+      margin-top: 28px;
+    }
+
+    .closing-layout p {
+      margin: 0;
+    }
+
+    .deck-qr {
+      display: grid;
+      justify-items: center;
+      gap: 12px;
+      color: var(--ink);
+      font-size: clamp(14px, 1.2vw, 18px);
+      font-weight: 700;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .deck-qr img {
+      display: block;
+      width: 100%;
+      border: 10px solid white;
+      box-shadow: 7px 7px 0 var(--ink);
+      image-rendering: pixelated;
+    }
+
+    .deck-url {
+      overflow-wrap: anywhere;
+      font-size: clamp(12px, 1vw, 16px);
+      font-weight: 500;
+    }
+
+    .deck-qr:hover .deck-url,
+    .deck-qr:focus-visible .deck-url {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
     .slide-status {
       display: grid;
       grid-template-columns: auto minmax(80px, 160px) auto;
@@ -430,6 +473,15 @@
     @media (max-width: 640px) {
       .slide-use-cases ul {
         grid-template-columns: 1fr;
+      }
+
+      .closing-layout {
+        grid-template-columns: 1fr;
+        justify-items: start;
+      }
+
+      .deck-qr {
+        width: min(160px, 100%);
       }
     }
 
@@ -687,8 +739,17 @@ Output: The format I want back.</div>
     <section class="slide">
       <div class="content">
         <div class="eyebrow">Q&A</div>
-        <h2>What automation task would you try first?</h2>
-        <p>Good candidate: something repetitive, non-production, inspectable, and useful enough that improving it would save real time.</p>
+        <div class="closing-layout">
+          <div>
+            <h2>What automation task would you try first?</h2>
+            <p>Good candidate: something repetitive, non-production, inspectable, and useful enough that improving it would save real time.</p>
+          </div>
+          <a class="deck-qr" href="https://ramseygr.github.io/AZSMUG20261030/" target="_blank" rel="noopener noreferrer" aria-label="Open the published slide deck">
+            <img src="images/deck-qr.svg" alt="QR code linking to the published slide deck">
+            <span>Scan to open the slides</span>
+            <span class="deck-url">ramseygr.github.io/AZSMUG20261030</span>
+          </a>
+        </div>
       </div>
     </section>
   </main>
