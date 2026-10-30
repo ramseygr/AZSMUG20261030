@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Endpoint Executive Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <div>
+        <h1>Endpoint Executive Dashboard <span class="badge-demo" id="demo-badge" hidden>Demo</span></h1>
+        <p class="subtitle" id="data-source">Sample data</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <span class="user" id="user-name" hidden></span>
+      <button type="button" class="btn" id="auth-button">Sign in</button>
+    </div>
+  </header>
+
+  <div class="alert" id="error-banner" role="alert" hidden>
+    <span class="alert-icon" aria-hidden="true">!</span>
+    <span class="alert-text" id="error-text"></span>
+    <button type="button" class="btn secondary" id="retry-button">Retry</button>
+  </div>
+
+  <div class="toolbar" role="search">
+    <div class="search">
+      <svg class="search-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M8.5 3a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11Zm0 1.5a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm4.9 8.84 3.38 3.38-1.06 1.06-3.38-3.38 1.06-1.06Z" fill="currentColor"/></svg>
+      <input type="search" id="device-search" placeholder="Filter by device name…" autocomplete="off" spellcheck="false" aria-label="Filter all widgets by device name" />
+    </div>
+    <span class="search-meta" id="search-meta" aria-live="polite"></span>
+  </div>
+
+  <main class="grid" id="dashboard" aria-busy="false">
+    <section class="card" id="compliance-card" aria-labelledby="compliance-title">
+      <header class="card-header">
+        <h2 id="compliance-title">Fleet compliance</h2>
+        <span class="card-meta" id="compliance-total"></span>
+      </header>
+      <div class="compliance-bar" id="compliance-bar" role="img" aria-label="Compliance distribution"></div>
+      <div class="stats" id="compliance-stats"></div>
+    </section>
+
+    <section class="card" id="os-card" aria-labelledby="os-title">
+      <header class="card-header">
+        <h2 id="os-title">OS version mix</h2>
+        <span class="card-meta" id="os-total"></span>
+      </header>
+      <ul class="os-list" id="os-list"></ul>
+    </section>
+
+    <section class="card card-wide" id="stale-card" aria-labelledby="stale-title">
+      <header class="card-header">
+        <h2 id="stale-title">Stale devices</h2>
+        <span class="card-meta stale-controls">
+          <label for="stale-days">No sync in</label>
+          <select id="stale-days" class="select">
+            <option value="7">7+ days</option>
+            <option value="14">14+ days</option>
+            <option value="30" selected>30+ days</option>
+            <option value="60">60+ days</option>
+          </select>
+          &middot; <span id="stale-count"></span>
+          <button type="button" class="btn secondary btn-sm" id="stale-export" disabled title="Download the rows currently shown as CSV">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v9m0 0-3.5-3.5M10 12l3.5-3.5M4 14v2.5h12V14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Export CSV
+          </button>
+        </span>
+      </header>
+      <div class="table-wrap">
+        <table class="table">
+          <thead id="stale-head">
+            <tr>
+              <th scope="col" data-sort="name"><button type="button" class="sort-btn">Device</button></th>
+              <th scope="col" data-sort="user"><button type="button" class="sort-btn">User</button></th>
+              <th scope="col" data-sort="os"><button type="button" class="sort-btn">OS</button></th>
+              <th scope="col" data-sort="compliance"><button type="button" class="sort-btn">Compliance</button></th>
+              <th scope="col" class="num" data-sort="lastSync"><button type="button" class="sort-btn">Last sync</button></th>
+              <th scope="col" class="num" data-sort="days"><button type="button" class="sort-btn">Days</button></th>
+            </tr>
+          </thead>
+          <tbody id="stale-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <p class="status" id="status" role="status" aria-live="polite"></p>
+
+  <dialog class="dialog" id="device-dialog" aria-labelledby="device-dialog-title">
+    <header class="dialog-header">
+      <div>
+        <h2 id="device-dialog-title">Devices</h2>
+        <span class="card-meta" id="device-dialog-count"></span>
+      </div>
+      <button type="button" class="icon-btn" id="device-dialog-close" aria-label="Close">&times;</button>
+    </header>
+    <div class="table-wrap dialog-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Device</th>
+            <th scope="col">User</th>
+            <th scope="col">OS</th>
+            <th scope="col">Compliance state</th>
+            <th scope="col" class="num">Last sync</th>
+          </tr>
+        </thead>
+        <tbody id="device-dialog-body"></tbody>
+      </table>
+    </div>
+  </dialog>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
